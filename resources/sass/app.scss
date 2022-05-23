@@ -6,3 +6,56 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+img{
+    max-width: 100%;
+}
+.global-header{
+    border-bottom: 4px solid #511B7F;
+    .logo-branch img{
+        height: 55px;
+    }
+    .nav-item{
+        height: 55px;
+        line-height: 55px;
+        ul{
+            margin-bottom: 0px;
+            li{
+                list-style: none;
+                display: inline-block;
+                margin-left: 15px;
+            }
+        }
+    }
+    a{
+        color: #000;
+    }
+}
+
+h3{
+    &.title{
+        font-weight: bold;
+    }
+}
+
+.product-item{
+    img{
+        max-width: 100%;
+    }
+}
+
+.footer{
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 4px solid #511B7F;
+    ul{
+        margin: 0px;
+        padding: 0px;
+        li{
+            list-style: none;
+            a{
+                color: #000;
+            }
+        }
+    }
+}
