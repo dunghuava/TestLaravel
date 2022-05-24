@@ -14,7 +14,6 @@
                         <li><a href="/">Research & Reviews</a></li>
                         <li><a href="/">News & Videos</a></li>
                         <li><a href="/">Sell Your Car</a></li>
-                        <li><a href="/">Service & Repair</a></li>
                         @php
                             $cartSession = Session::get('cart') ?? [];
                         @endphp
@@ -41,11 +40,6 @@
                 </button>
                 </div>
             </div>
-            <script>
-                setTimeout(()=>{
-                    $('.alert').hide();
-                },3000);
-            </script>
         @endif
     </div>
 </section>

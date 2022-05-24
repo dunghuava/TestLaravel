@@ -15,6 +15,7 @@
             <div class="col-lg-7">
                 <h3>Infomation</h3>
                 <form method="POST">
+                    @csrf
                     <div class="form-group">
                         <label>Full name</label>
                         <input required value="{{ $user->name }}" name="name" type="text" class="form-control" placeholder="Full name">
@@ -39,12 +40,12 @@
                   </form>
             </div>
             <div class="col-lg-5">
-                <h3>#Order</h3>
+                <h3>Order</h3>
                 <table class="table">
                     <thead>
                         <th>#</th>
                         <th>Name</th>
-                        <th>Amout</th>
+                        <th>Amount</th>
                     </thead>
                     <tbody>
                         @php
@@ -65,27 +66,4 @@
             </div>
         </div>
     </section>
-    <script>
-        $('.quantity_product').change(function(e){
-            let id = $(this).data('id');
-            let quantity = $(this).val();
-            if(quantity < 1){
-                $(this).val(1);
-                alert('Invalid value !');
-                return;
-            }
-            axios.post('/cart/add',{id:id,quantity:quantity,action:'update'}).then(function(response){
-                location.reload();
-            });
-        });
-
-        $('.btn_remove').click(function(e){
-            if(confirm('Are you sure want to delete ?')){
-                let id = $(this).data('id');
-                axios.post('/cart/add',{id:id,action:'remove'}).then(function(response){
-                    location.reload();
-                });
-            }
-        });
-    </script>
 @endsection

@@ -17,7 +17,7 @@
                 <div class="col-lg-3">
                     <div class="product-item mt-2 shadow p-2">
                         <a href="{{ asset('/product/'.$item->alias) }}">
-                            <img src="https://www.cstatic-images.com/car-pictures/main/USC50FOT113A021001.png">
+                            <img src="{{ asset('/storage/images/'.$item->image) }}">
                         </a>
                         <p class="mb-1">{{ $item->name }}</p>
                         <p class="mb-1">Price: {{ number_format($item->price).'$' }}</p>

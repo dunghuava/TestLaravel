@@ -15,6 +15,7 @@ use App\Http\Controllers\administartors\DashboardController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/',[HomeController::class,'index']);
@@ -22,8 +23,11 @@ Route::get('/',[HomeController::class,'index']);
 Route::group(['prefix'=>'cart'],function(){
     Route::get('/',[CartController::class,'index']);
     Route::post('/add',[CartController::class,'addToCart']);
-    Route::match(['get','post'],'/login',[CartController::class,'login']);
-    Route::get('/pay',[CartController::class,'payment']);
+    Route::match(['get','post'],'/pay',[CartController::class,'payment']);
+});
+
+Route::group(['prefix'=>'user'],function(){
+    Route::match(['get','post'],'/login',[UserController::class,'login']);
 });
 
 Route::group(['prefix'=>'product'],function(){
