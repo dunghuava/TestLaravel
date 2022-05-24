@@ -6,6 +6,7 @@ use App\Product;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
@@ -13,7 +14,7 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $items = Product::all();
-        return view('administrators.product-list',['items'=>$items]);
+        return view('administrators.product.product-list',['items'=>$items]);
     }
 
     public function add(Request $request, $id = 0)
@@ -50,6 +51,20 @@ class ProductController extends Controller
                 $item->category = $request->category;
                 $item->status = (int) $request->status > 1 ? 0 : (int) $request->status;
 
+                if($file = $request->file('file')){
+                    $fileName = 'img_'.time().'_'.strtolower($file->getClientOriginalName());
+                    $filePath = storage_path('app/public/images');
+                    if($file->move($filePath,$fileName)){
+                        if($item->image){
+                            $imageOld = $filePath.'/'.$item->image;
+                            if(file_exists($imageOld)){
+                                unlink($imageOld);
+                            }
+                        }
+                        $item->image = $fileName;
+                    }
+                }
+
                 if(!$item->save()){
                     throw new Exception('The product could not be saved, please try again');
                 }
@@ -77,12 +92,15 @@ class ProductController extends Controller
         $data = [
             'item' => $item
         ];
-        return view('administrators.product-add',$data);
+        return view('administrators.product.product-add',$data);
     }
 
     public function view(Request $request)
     {
-        $product = Product::where('alias',trim($request->alias))->first();
+        $product = Product::where('alias',trim($request->alias))->where('status',1)->first();
+        if(!$product){
+            return Redirect::to('/');
+        }
         $data = [
             'product' => $product
         ];

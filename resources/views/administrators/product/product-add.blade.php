@@ -7,7 +7,7 @@
                 <h3 class="mt-2">Product {{ ($item->id ?? 0) > 0 ? 'Edit' : 'Add' }}</h3>
             </div>
             <div class="col-lg-12">
-                <form class="mb-3" action="" method="POST">
+                <form class="mb-3" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                       <label>Name</label>
@@ -19,6 +19,19 @@
                       @if ($item)
                         <p class="mt-2"><a target="_blank" href="{{ asset('/product/'.$item->alias) }}">{{ asset('/product/'.$item->alias) }}</a></p>
                       @endif
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Image</label>
+                                <input name="file" type="file" class="form-control border-0 pl-0">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 text-left">
+                            @if ($item)
+                                <img class="mt-2" width="55" src="{{ asset('/storage/images/'.$item->image) }}">
+                            @endif
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>Price</label>
@@ -40,7 +53,7 @@
                         <div class="col-lg-3">
                             <div class="form-group">
                                 <label>Registration</label>
-                                <input name="regist_date" value="{{ $item->regis_date ?? '' }}" type="date" class="form-control">
+                                <input name="regist_date" value="{{ $item->regist_date ?? '' }}" type="date" class="form-control">
                             </div>
                         </div>
                         <div class="col-lg-3">
@@ -65,8 +78,10 @@
                       </label>
                     </div>
                     <br/>
-                    <a href="/administrator/product/list" class="btn btn-danger">← Back</a>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <div class="text-center">
+                        <a href="/administrator/product/list" class="btn btn-danger">← Back</a>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
                   </form>
             </div>
         </div>

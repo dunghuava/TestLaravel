@@ -25,11 +25,6 @@
                     </button>
                   </div>
               </div>
-              <script>
-                    setTimeout(()=>{
-                        $('.alert').hide();
-                    },3000);
-              </script>
             @endif
             @yield('content')
         </div>
