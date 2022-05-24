@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Order;
+use App\OrderItem;
 use App\Product;
+use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\URL;
 
 class CartController extends Controller
 {
@@ -57,39 +58,57 @@ class CartController extends Controller
         return Redirect::to('/cart');
     }
 
-    public function login(Request $request)
+    public function payment(Request $request)
     {
-        if(Auth::check()){
+        if(!Auth::check()){
+            return Redirect::to('/user/login?redirect_url='.$request->url());
+        }
+        $cartSession = Session::get('cart') ?? [];
+
+        if(empty($cartSession)){
             return Redirect::to('/');
         }
 
         if($request->method() == 'POST'){
-            $email = $request->email;
-            $password = $request->password;
-            $authorization = [
-                'email' => $email,
-                'password' => $password
-            ];
-            if(!Auth::attempt($authorization)){
+
+            try{
+                $order = new Order();
+                $order->name = $request->name;
+                $order->user_id = Auth::user()->id;
+                $order->email = $request->email;
+                $order->address = $request->address;
+                $order->phone = $request->phone;
+                $order->note = $request->note;
+
+                if($order->save()){
+                    $order_item = Session::get('cart') ?? [];
+                    foreach($order_item as $item){
+                        OrderItem::create([
+                            'order_id' => $order->id,
+                            'product_id' => $item['product_id'],
+                            'category' => $item['category'],
+                            'name' => $item['name'],
+                            'quantity' => $item['quantity'],
+                            'amount' => $item['amount']
+                        ]);
+                    }
+                    Session::forget('cart');
+                    session()->flash('notify',[
+                        'status'=>'success',
+                        'message' => 'Your order has been placed successfully'
+                    ]);
+                    return Redirect::to('/');
+                }
+            }catch(Exception $e){
+                $order->delete();
                 session()->flash('notify',[
                     'status'=>'error',
-                    'message' => 'Email address or password is incorrect !'
+                    'message' => $e->getMessage()
                 ]);
-            }else{
-                $redirect_url = $request->get('redirect_url') ?? '/';
-                return Redirect::to($redirect_url);
+                return Redirect::back();
             }
-
         }
-        return view('pages.login');
-    }
 
-    public function payment(Request $request)
-    {
-        if(!Auth::check()){
-            return Redirect::to('/cart/login?redirect_url='.$request->url());
-        }
-        $cartSession = Session::get('cart') ?? [];
         $data = [
             'cart' => $cartSession,
             'user' => Auth::user()

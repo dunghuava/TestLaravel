@@ -13,6 +13,7 @@ class HomeController extends Controller
         $data = [
             'product' => $product
         ];
+
         return view('pages.home',$data);
     }
 }

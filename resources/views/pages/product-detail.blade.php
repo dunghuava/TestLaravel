@@ -12,8 +12,8 @@
                 </nav>
             </div>
             <div class="col-lg-5">
-                <div class="product-detail border">
-                    <img src="https://www.cstatic-images.com/car-pictures/main/USC50FOT113A021001.png">
+                <div class="product-detail border p-3 text-center">
+                    <img src="{{ asset('/storage/images/'.$product->image) }}">
                 </div>
             </div>
             <div class="col-lg-7">
