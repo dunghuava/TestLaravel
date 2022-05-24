@@ -21,6 +21,9 @@ Route::get('/',[HomeController::class,'index']);
 
 Route::group(['prefix'=>'cart'],function(){
     Route::get('/',[CartController::class,'index']);
+    Route::post('/add',[CartController::class,'addToCart']);
+    Route::match(['get','post'],'/login',[CartController::class,'login']);
+    Route::get('/pay',[CartController::class,'payment']);
 });
 
 Route::group(['prefix'=>'product'],function(){
@@ -32,4 +35,5 @@ Route::group(['prefix'=>'administrator'],function(){
     Route::get('/product/list',[ProductController::class,'index']);
     Route::match(['get','post'],'/product/add',[ProductController::class,'add']);
     Route::match(['get','post'],'/product/{id}/edit',[ProductController::class,'add']);
+    Route::post('/product/delete',[ProductController::class,'delete']);
 });

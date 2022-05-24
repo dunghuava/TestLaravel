@@ -6,12 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title')</title>
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <script src="{{ mix('js/app.js') }}"></script>
 </head>
 <body>
     @include('navigation')
-    <div class="container">
-        @yield('content')
-    </div>
+    @yield('content')
     @include('footer')
 </body>
 </html>
