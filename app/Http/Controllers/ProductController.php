@@ -10,14 +10,16 @@ use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         $items = Product::all();
         return view('administrators.product-list',['items'=>$items]);
     }
 
-    public function add(Request $request, $id = 0){
+    public function add(Request $request, $id = 0)
+    {
         if($request->method() == 'POST'){
-            $id = $request->id || 0;
+            $id = $request->id ?? 0;
             $action = $request->action ?? 'create';
             try{
                 $item = Product::find($id);
@@ -72,10 +74,27 @@ class ProductController extends Controller
                 return Redirect::to('/administrator/product/list');
             }
         }
-        return view('administrators.product-add',['item'=>$item]);
+        $data = [
+            'item' => $item
+        ];
+        return view('administrators.product-add',$data);
     }
 
-    public function view(Request $request){
-        return view('pages.product-detail');
+    public function view(Request $request)
+    {
+        $product = Product::where('alias',trim($request->alias))->first();
+        $data = [
+            'product' => $product
+        ];
+        return view('pages.product-detail',$data);
+    }
+
+    public function delete(Request $request)
+    {
+        session()->flash('notify',[
+            'status'=>'success',
+            'message' => 'Delete successfully'
+        ]);
+        Product::destroy((int) $request->id);
     }
 }

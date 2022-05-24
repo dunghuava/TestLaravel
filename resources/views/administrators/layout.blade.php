@@ -18,17 +18,23 @@
         <div class="content-page border bg-white">
             @if(session()->has('notify'))
               <div class="col-lg-12">
-                <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
+                <div class="alert alert-primary alert-dismissible fade show mt-2" role="alert">
                     <strong class="text-uppercase">[{{ session()->get('notify')['status'] }}]</strong> {{ session()->get('notify')['message'] }}
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
               </div>
+              <script>
+                    setTimeout(()=>{
+                        $('.alert').hide();
+                    },3000);
+              </script>
             @endif
             @yield('content')
         </div>
     </div>
+    <script src="{{ mix('js/app.js') }}"></script>
     <footer class="footer-mn">
         <div class="container">
             <div class="row">

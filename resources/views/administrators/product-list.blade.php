@@ -13,7 +13,7 @@
                 <table class="table">
                     <thead class="thead-dark">
                       <tr>
-                        <th width="5%" scope="col">#</th>
+                        <th width="5%" scope="col">ID</th>
                         <th scope="col">Name</th>
                         <th width="15%" scope="col">Price</th>
                         <th width="10%" scope="col">Status</th>
@@ -23,13 +23,17 @@
                     <tbody>
                         @foreach ($items as $item)
                           <tr>
-                            <th scope="row">{{ $item->id }}</th>
-                            <td>{{ $item->name }}</td>
-                            <td>{{ number_format($item->price) }}</td>
-                            <td>{{ $item->status }}</td>
-                            <td align="right">
+                            <th class="align-middle" scope="row">{{ $item->id }}</th>
+                            <td class="align-middle">{{ $item->name }}</td>
+                            <td class="align-middle">{{ number_format($item->price) }}</td>
+                            <td class="align-middle">
+                                <span class="p-2 badge badge-{{ $item->status ? 'success':'danger' }}">
+                                    {{ $item->status ? 'Active':'Hidden' }}
+                                </span>
+                            </td>
+                            <td class="align-middle" align="right">
                                 <a href="/administrator/product/{{ $item->id }}/edit" class="btn btn-small btn-success">Edit</a>
-                                <a href="/administrator/product/" class="btn btn-small btn-danger">Delete</a>
+                                <a onclick="onDelete({{ $item->id }})" class="btn btn-small btn-danger">Delete</a>
                             </td>
                           </tr>
                         @endforeach
@@ -38,4 +42,14 @@
             </div>
         </div>
     </section>
+    <script>
+        function onDelete(id)
+        {
+            if(confirm('Are you sure want to delete ?')){
+                axios.post('/administrator/product/delete',{id:id}).then(function(response){
+                    location.reload();
+                });
+            }
+        }
+    </script>
 @endsection
