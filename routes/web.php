@@ -34,7 +34,8 @@ Route::group(['prefix'=>'product'],function(){
     Route::get('/{alias}',[ProductController::class,'view']);
 });
 
-Route::group(['prefix'=>'administrator'],function(){
+Route::match(['get','post'],'administrator/login',[UserController::class,'adminLogin']);
+Route::group(['prefix'=>'administrator','middleware'=>'admin'],function(){
     Route::get('/',[DashboardController::class,'index']);
     Route::get('/product/list',[ProductController::class,'index']);
     Route::match(['get','post'],'/product/add',[ProductController::class,'add']);

@@ -19,7 +19,8 @@ class UserController extends Controller
             $password = $request->password;
             $authorization = [
                 'email' => $email,
-                'password' => $password
+                'password' => $password,
+                'type' => 0
             ];
             if(!Auth::attempt($authorization)){
                 session()->flash('notify',[
@@ -33,5 +34,33 @@ class UserController extends Controller
 
         }
         return view('pages.login');
+    }
+
+    public function adminLogin(Request $request)
+    {
+        if (Auth::check() && Auth::user()->type == 1) {
+            return Redirect::to('/administrator');
+        }
+
+        if ($request->method() == 'POST') {
+            $email = $request->email;
+            $password = $request->password;
+            $authorization = [
+                'email' => $email,
+                'password' => $password,
+                'type' => 1
+            ];
+            if (!Auth::attempt($authorization)) {
+                session()->flash('notify',[
+                    'status'=>'error',
+                    'message' => 'Email address or password is incorrect !'
+                ]);
+            } else {
+                $redirect_url = $request->get('redirect_url','/');
+                return Redirect::to($redirect_url);
+            }
+
+        }
+        return view('administrators.login');
     }
 }
