@@ -28,14 +28,14 @@ class CartController extends Controller
         $quantity = $request->quantity ?? 1;
         $action = $request->action ?? 'add';
         $product = Product::find($id);
-        if(!$product){
+        if (!$product){
             return Redirect::back();
         }
         $cartSession = Session::get('cart');
 
-        if($action == 'add' || $action == 'update'){
+        if ($action == 'add' || $action == 'update'){
 
-            if($action == 'add'){
+            if ($action == 'add') {
                 $quantity = ($cartSession[$id]['quantity'] ?? 0) + $quantity;
             }
 
@@ -49,7 +49,7 @@ class CartController extends Controller
             ];
         }
 
-        if($action == 'remove' && isset($cartSession[$id])){
+        if ($action == 'remove' && isset($cartSession[$id])) {
             unset($cartSession[$id]);
         }
 
@@ -60,18 +60,18 @@ class CartController extends Controller
 
     public function payment(Request $request)
     {
-        if(!Auth::check()){
+        if (!Auth::check()) {
             return Redirect::to('/user/login?redirect_url='.$request->url());
         }
         $cartSession = Session::get('cart') ?? [];
 
-        if(empty($cartSession)){
+        if (empty($cartSession)) {
             return Redirect::to('/');
         }
 
-        if($request->method() == 'POST'){
+        if ($request->method() == 'POST') {
 
-            try{
+            try {
                 $order = new Order();
                 $order->name = $request->name;
                 $order->user_id = Auth::user()->id;
@@ -89,6 +89,7 @@ class CartController extends Controller
                             'category' => $item['category'],
                             'name' => $item['name'],
                             'quantity' => $item['quantity'],
+                            'price' => $item['price'],
                             'amount' => $item['amount']
                         ]);
                     }
@@ -99,7 +100,13 @@ class CartController extends Controller
                     ]);
                     return Redirect::to('/');
                 }
-            }catch(Exception $e){
+                session()->flash('notify',[
+                    'status'=>'error',
+                    'message' => 'Something went wrong'
+                ]);
+                return Redirect::back();
+
+            } catch(Exception $e) {
                 $order->delete();
                 session()->flash('notify',[
                     'status'=>'error',

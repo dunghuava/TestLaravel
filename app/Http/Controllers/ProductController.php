@@ -19,10 +19,10 @@ class ProductController extends Controller
 
     public function add(Request $request, $id = 0)
     {
-        if($request->method() == 'POST'){
+        if ($request->method() == 'POST') {
             $id = $request->id ?? 0;
             $action = $request->action ?? 'create';
-            try{
+            try {
                 $item = Product::find($id);
                 if($action == 'update' && !$item){
                     throw new Exception('Product does not exist');
@@ -74,7 +74,7 @@ class ProductController extends Controller
                 ]);
                 return Redirect::to('/administrator/product/list');
 
-            }catch(Exception $e){
+            } catch(Exception $e) {
                 session()->flash('notify',[
                     'status'=>'error',
                     'message' => $e->getMessage()
@@ -83,7 +83,7 @@ class ProductController extends Controller
             }
         }
         $item = null;
-        if((int) $id > 0){
+        if ((int) $id > 0) {
             $item = Product::find((int) $id);
             if(!$item){
                 return Redirect::to('/administrator/product/list');
@@ -98,7 +98,7 @@ class ProductController extends Controller
     public function view(Request $request)
     {
         $product = Product::where('alias',trim($request->alias))->where('status',1)->first();
-        if(!$product){
+        if (!$product) {
             return Redirect::to('/');
         }
         $data = [

@@ -1,8 +1,8 @@
 <?php
 
 
-if(!function_exists('makeAlias')){
-    function makeAlias ($str,$options=array())
+if (!function_exists('makeAlias')) {
+    function makeAlias ($str, $options=array())
     {
         // Make sure string is in UTF-8 and strip invalid UTF-8 characters
         $str = mb_convert_encoding((string)$str, 'UTF-8', mb_list_encodings());
