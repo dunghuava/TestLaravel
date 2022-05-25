@@ -16,6 +16,9 @@
                       <label>Password</label>
                       <input name="password" type="password" class="form-control" placeholder="Password">
                     </div>
+                    <p>
+                        <a href="/user/signup">Create an account ?</a>
+                    </p>
                     <button type="submit" class="btn btn-primary">Submit</button>
                   </form>
             </div>

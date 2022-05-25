@@ -28,6 +28,7 @@ Route::group(['prefix'=>'cart'],function(){
 
 Route::group(['prefix'=>'user'],function(){
     Route::match(['get','post'],'/login',[UserController::class,'login']);
+    Route::match(['get','post'],'/signup',[UserController::class,'signup']);
 });
 
 Route::group(['prefix'=>'product'],function(){

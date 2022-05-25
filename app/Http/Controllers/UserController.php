@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -34,6 +35,36 @@ class UserController extends Controller
 
         }
         return view('pages.login');
+    }
+
+    public function signup(Request $request)
+    {
+        if ($request->method() == 'POST') {
+            $name = $request->name;
+            $email = $request->email;
+            $password = $request->password;
+            $password_confirm = $request->password_confirm;
+            if ($password_confirm != $password) {
+                session()->flash('notify',[
+                    'status'=>'error',
+                    'message' => 'Password does not match !'
+                ]);
+                return Redirect::back();
+            }
+            $user = new User();
+            $user->name = $name;
+            $user->email = $email;
+            $user->password = bcrypt($password);
+            if ($user->save()) {
+                session()->flash('notify',[
+                    'status'=>'success',
+                    'message' => 'Account registration successful !'
+                ]);
+                return Redirect::to('/user/login');
+            }
+            return Redirect::back();
+        }
+        return view('pages.signup');
     }
 
     public function adminLogin(Request $request)

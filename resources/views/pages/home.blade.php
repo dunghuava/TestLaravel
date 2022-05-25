@@ -8,8 +8,8 @@
                 <p>Popular searches near you.</p>
             </div>
             <div class="col-lg-4">
-                <form class="form-group form-inline float-right" method="GET" action="/">
-                    <input placeholder="Search..." class="form-control" type="search"/>&nbsp;
+                <form class="form-group form-inline float-right" method="GET">
+                    <input value="{{ $query }}" name="q" placeholder="Search..." class="form-control" type="search"/>&nbsp;
                     <button class="btn btn-danger" type="submit">Search</button>
                 </form>
             </div>
