@@ -9,9 +9,16 @@ class HomeController extends Controller
 {
     public function index ()
     {
-        $product = Product::where('status',1)->get();
+        $query = request()->get('q');
+        $product = Product::where('status',1);
+        if ($query) {
+            $product->searchByQuery([
+                'match' => $query
+            ]);
+        }
         $data = [
-            'product' => $product
+            'product' => $product->get(),
+            'query' => $query
         ];
 
         return view('pages.home',$data);

@@ -13,6 +13,7 @@ class OrderItem extends Model
         'product_id',
         'category',
         'name',
+        'price',
         'quantity',
         'amount'
     ];
