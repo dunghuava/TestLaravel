@@ -18,9 +18,9 @@
                     <div class="product-item mt-2 shadow p-2">
                         <a href="{{ asset('/product/'.$item->alias) }}">
                             <img src="{{ asset('/storage/images/'.$item->image) }}">
+                            <p class="mb-1">{{ $item->name }}</p>
+                            <p class="mb-1">Price: {{ number_format($item->price).'$' }}</p>
                         </a>
-                        <p class="mb-1">{{ $item->name }}</p>
-                        <p class="mb-1">Price: {{ number_format($item->price).'$' }}</p>
                     </div>
                 </div>
             @endforeach

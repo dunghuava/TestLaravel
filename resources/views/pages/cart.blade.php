@@ -18,6 +18,7 @@
                         <th width="5%" scope="col">#</th>
                         <th scope="col">Name</th>
                         <th width="15%" scope="col">Category</th>
+                        <th width="15%" scope="col">Price</th>
                         <th width="10%" scope="col">Quantity</th>
                         <th width="15%" scope="col">Amount</th>
                         <th width="5%" scope="col">Action</th>
@@ -35,6 +36,7 @@
                             <td scope="row">{{ $index }}</td>
                             <td class="align-middle">{{ $item['name'] }}</td>
                             <td class="align-middle">{{ $item['category'] }}</td>
+                            <td class="align-middle">{{ number_format($item['price']) }}$</td>
                             <td class="align-middle">
                                 <input style="width:75px" data-id="{{ $item['product_id'] }}" class="quantity_product" value="{{ $item['quantity'] }}" type="number">
                             </td>

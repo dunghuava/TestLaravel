@@ -10,10 +10,10 @@
               <a class="nav-link" href="/administrator/product/list">Product</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/administrator/user/list">Users</a>
+              <a class="nav-link" href="/administrator">Users</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/administrator/order/list">Order</a>
+                <a class="nav-link" href="/administrator">Order</a>
             </li>
           </ul>
         </div>
