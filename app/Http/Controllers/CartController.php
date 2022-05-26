@@ -13,27 +13,27 @@ use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
-    public function index ()
+    public function index()
     {
         $cartSession = Session::get('cart') ?? [];
         $data = [
             'cart' => $cartSession
         ];
-        return view('pages.cart',$data);
+        return view('pages.cart', $data);
     }
 
     public function addToCart(Request $request)
     {
-        $id = (int) $request->id;
+        $id = (int)$request->id;
         $quantity = $request->quantity ?? 1;
         $action = $request->action ?? 'add';
         $product = Product::find($id);
-        if (!$product){
+        if (!$product) {
             return Redirect::back();
         }
         $cartSession = Session::get('cart');
 
-        if ($action == 'add' || $action == 'update'){
+        if ($action == 'add' || $action == 'update') {
 
             if ($action == 'add') {
                 $quantity = ($cartSession[$id]['quantity'] ?? 0) + $quantity;
@@ -53,16 +53,13 @@ class CartController extends Controller
             unset($cartSession[$id]);
         }
 
-        Session::put('cart',$cartSession);
+        Session::put('cart', $cartSession);
 
         return Redirect::to('/cart');
     }
 
     public function payment(Request $request)
     {
-        if (!Auth::check()) {
-            return Redirect::to('/user/login?redirect_url='.$request->url());
-        }
         $cartSession = Session::get('cart') ?? [];
 
         if (empty($cartSession)) {
@@ -80,9 +77,9 @@ class CartController extends Controller
                 $order->phone = $request->phone;
                 $order->note = $request->note;
 
-                if($order->save()){
+                if ($order->save()) {
                     $order_item = Session::get('cart') ?? [];
-                    foreach($order_item as $item){
+                    foreach ($order_item as $item) {
                         OrderItem::create([
                             'order_id' => $order->id,
                             'product_id' => $item['product_id'],
@@ -94,22 +91,22 @@ class CartController extends Controller
                         ]);
                     }
                     Session::forget('cart');
-                    session()->flash('notify',[
-                        'status'=>'success',
+                    session()->flash('notify', [
+                        'status' => 'success',
                         'message' => 'Your order has been placed successfully'
                     ]);
                     return Redirect::to('/');
                 }
-                session()->flash('notify',[
-                    'status'=>'error',
+                session()->flash('notify', [
+                    'status' => 'error',
                     'message' => 'Something went wrong'
                 ]);
                 return Redirect::back();
 
-            } catch(Exception $e) {
+            } catch (Exception $e) {
                 $order->delete();
-                session()->flash('notify',[
-                    'status'=>'error',
+                session()->flash('notify', [
+                    'status' => 'error',
                     'message' => $e->getMessage()
                 ]);
                 return Redirect::back();
@@ -120,6 +117,6 @@ class CartController extends Controller
             'cart' => $cartSession,
             'user' => Auth::user()
         ];
-        return view('pages.pay',$data);
+        return view('pages.pay', $data);
     }
 }
