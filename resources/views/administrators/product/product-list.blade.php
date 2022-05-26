@@ -46,7 +46,7 @@
         function onDelete(id)
         {
             if(confirm('Are you sure want to delete ?')){
-                axios.post('/administrator/product/delete',{id:id}).then(function(response){
+                axios.post('/administrator/product/delete/'+id).then(function(response){
                     location.reload();
                 });
             }

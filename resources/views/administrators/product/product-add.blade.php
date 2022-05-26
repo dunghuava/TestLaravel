@@ -7,7 +7,7 @@
                 <h3 class="mt-2">Product {{ ($item->id ?? 0) > 0 ? 'Edit' : 'Add' }}</h3>
             </div>
             <div class="col-lg-12">
-                <form class="mb-3" method="POST" enctype="multipart/form-data">
+                <form class="mb-3" method="POST" action="/administrator/product/store" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                       <label>Name</label>
@@ -15,7 +15,7 @@
                         <input type="hidden" name="id" value="{{ $item->id }}"/>
                       @endif
                       <input type="hidden" name="action" value="{{ ($item->id ?? 0) > 0 ? 'update':'create' }}"/>
-                      <input name="name" value="{{ $item->name ?? '' }}" type="text" class="form-control">
+                      <input required name="name" value="{{ $item->name ?? '' }}" type="text" class="form-control">
                       @if ($item)
                         <p class="mt-2"><a target="_blank" href="{{ asset('/product/'.$item->alias) }}">{{ asset('/product/'.$item->alias) }}</a></p>
                       @endif
