@@ -12,17 +12,17 @@
             <div class="col-lg-12">
                 <table class="table">
                     <thead class="thead-dark">
-                      <tr>
+                    <tr>
                         <th width="5%" scope="col">ID</th>
                         <th scope="col">Name</th>
                         <th width="15%" scope="col">Price</th>
                         <th width="10%" scope="col">Status</th>
                         <th width="15%" scope="col">Action</th>
-                      </tr>
+                    </tr>
                     </thead>
                     <tbody>
-                        @foreach ($items as $item)
-                          <tr>
+                    @foreach ($items as $item)
+                        <tr>
                             <th class="align-middle" scope="row">{{ $item->id }}</th>
                             <td class="align-middle">{{ $item->name }}</td>
                             <td class="align-middle">{{ number_format($item->price) }}</td>
@@ -35,18 +35,17 @@
                                 <a href="/administrator/product/{{ $item->id }}/edit" class="btn btn-small btn-success">Edit</a>
                                 <a onclick="onDelete({{ $item->id }})" class="btn btn-small btn-danger">Delete</a>
                             </td>
-                          </tr>
-                        @endforeach
+                        </tr>
+                    @endforeach
                     </tbody>
-                  </table>
+                </table>
             </div>
         </div>
     </section>
     <script>
-        function onDelete(id)
-        {
-            if(confirm('Are you sure want to delete ?')){
-                axios.post('/administrator/product/delete/'+id).then(function(response){
+        function onDelete(id) {
+            if (confirm('Are you sure want to delete ?')) {
+                axios.post('/administrator/product/delete/' + id).then(function (response) {
                     location.reload();
                 });
             }

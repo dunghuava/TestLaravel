@@ -11,11 +11,7 @@ class UserController extends Controller
 {
     public function login(Request $request)
     {
-        if(Auth::check()){
-            return Redirect::to('/');
-        }
-
-        if($request->method() == 'POST'){
+        if ($request->method() == 'POST') {
             $email = $request->email;
             $password = $request->password;
             $authorization = [
@@ -23,13 +19,13 @@ class UserController extends Controller
                 'password' => $password,
                 'type' => 0
             ];
-            if(!Auth::attempt($authorization)){
-                session()->flash('notify',[
-                    'status'=>'error',
+            if (!Auth::attempt($authorization)) {
+                session()->flash('notify', [
+                    'status' => 'error',
                     'message' => 'Email address or password is incorrect !'
                 ]);
-            }else{
-                $redirect_url = $request->get('redirect_url','/');
+            } else {
+                $redirect_url = $request->get('redirect_url', '/');
                 return Redirect::to($redirect_url);
             }
 
@@ -45,8 +41,8 @@ class UserController extends Controller
             $password = $request->password;
             $password_confirm = $request->password_confirm;
             if ($password_confirm != $password) {
-                session()->flash('notify',[
-                    'status'=>'error',
+                session()->flash('notify', [
+                    'status' => 'error',
                     'message' => 'Password does not match !'
                 ]);
                 return Redirect::back();
@@ -56,8 +52,8 @@ class UserController extends Controller
             $user->email = $email;
             $user->password = bcrypt($password);
             if ($user->save()) {
-                session()->flash('notify',[
-                    'status'=>'success',
+                session()->flash('notify', [
+                    'status' => 'success',
                     'message' => 'Account registration successful !'
                 ]);
                 return Redirect::to('/user/login');
@@ -82,12 +78,12 @@ class UserController extends Controller
                 'type' => 1
             ];
             if (!Auth::attempt($authorization)) {
-                session()->flash('notify',[
-                    'status'=>'error',
+                session()->flash('notify', [
+                    'status' => 'error',
                     'message' => 'Email address or password is incorrect !'
                 ]);
             } else {
-                $redirect_url = $request->get('redirect_url','/');
+                $redirect_url = $request->get('redirect_url', '/');
                 return Redirect::to($redirect_url);
             }
 

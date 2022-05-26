@@ -3,21 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    protected $productRepo;
+
+    public function __construct()
+    {
+        $this->productRepo = new ProductRepository();
+    }
+
     public function index ()
     {
-        $query = request()->get('q');
-        $product = Product::where('status',1);
-        if ($query) {
-            $product->searchByQuery([
-                'match' => $query
-            ]);
-        }
+        $query = request()->get('q','');
+        $product = $this->productRepo->getProductHomePage($query);
         $data = [
-            'product' => $product->get(),
+            'product' => $product,
             'query' => $query
         ];
 

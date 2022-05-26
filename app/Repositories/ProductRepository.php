@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 class ProductRepository extends BaseRepository
 {
 
-    public function getProductHomePage(string $query)
+    public function getProductHomePage($query)
     {
-        return Product::searchQuery($query)->get();
+        return Product::search($query)->get();
     }
 
     public function saveProduct(Request $request)
