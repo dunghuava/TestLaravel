@@ -10,7 +10,8 @@ class ProductRepository extends BaseRepository
 
     public function getProductHomePage($query)
     {
-        return Product::search($query)->get();
+        $search = new SearchRepository();
+        return $search->search($query);
     }
 
     public function saveProduct(Request $request)

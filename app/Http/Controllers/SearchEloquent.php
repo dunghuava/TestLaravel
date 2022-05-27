@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-interface SearchElastic
+interface SearchEloquent
 {
     public function search($query = null);
 }

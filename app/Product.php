@@ -2,11 +2,10 @@
 
 namespace App;
 
-use App\Http\Controllers\SearchElastic;
 use Illuminate\Database\Eloquent\Model;
 use Elasticquent\ElasticquentTrait;
 
-class Product extends Model implements SearchElastic
+class Product extends Model
 {
     use ElasticquentTrait;
 
@@ -39,25 +38,4 @@ class Product extends Model implements SearchElastic
             'analyzer' => 'standard',
         ],
     ];
-
-
-    public static function search($query = null)
-    {
-        $search = self::where('status', 1);
-        if ($query) {
-            return Product::searchByQuery([
-                'match' => $query
-            ])->where('status', 1);
-        }
-        return $search;
-    }
-
-    public static function searchQuery($query = null)
-    {
-        return self::where('status', 1)->where(function ($model) use ($query) {
-            $model->where('name', 'like', '%' . $query . '%')
-                ->orWhere('engine', 'like', '%' . $query . '%')
-                ->orWhere('category', 'like', '%' . $query . '%');
-        });
-    }
 }
