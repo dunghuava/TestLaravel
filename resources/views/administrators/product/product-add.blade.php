@@ -7,7 +7,7 @@
                 <h3 class="mt-2">Product {{ ($item->id ?? 0) > 0 ? 'Edit' : 'Add' }}</h3>
             </div>
             <div class="col-lg-12">
-                <form class="mb-3" method="POST" action="/administrator/product/store" enctype="multipart/form-data">
+                <form class="mb-3" method="POST" action="{{route('admin.product.store')}}" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                       <label>Name</label>
@@ -79,7 +79,7 @@
                     </div>
                     <br/>
                     <div class="text-center">
-                        <a href="/administrator/product/list" class="btn btn-danger">← Back</a>
+                        <a href="{{route('admin.product.list')}}" class="btn btn-danger">← Back</a>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                   </form>

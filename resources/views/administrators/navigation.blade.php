@@ -4,13 +4,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="/administrator">Dashboard</a>
+              <a class="nav-link" href="{{route('admin')}}">Dashboard</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/administrator/product/list">Product</a>
+              <a class="nav-link" href="{{route('admin.product.list')}}">Product</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/administrator/order/list">Order</a>
+                <a class="nav-link" href="{{route('admin.order.list')}}">Order</a>
             </li>
           </ul>
         </div>

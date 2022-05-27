@@ -13,3 +13,6 @@ yarn-error.log
 public/js/app.js
 public/mix-manifest.json
 .idea/
+/docker-data/mysql
+/docker-data/nginx_log
+/docker-data/php-fpm

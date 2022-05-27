@@ -6,7 +6,7 @@
             <div class="col-lg-12">
                 <div class="d-flex">
                     <h3 class="mt-2">Product</h3>
-                    <a class="mt-2 ml-3 pt-1" href="/administrator/product/add">+ Add new</a>
+                    <a class="mt-2 ml-3 pt-1" href="{{route('admin.product.list')}}">+ Add new</a>
                 </div>
             </div>
             <div class="col-lg-12">

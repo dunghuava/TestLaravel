@@ -22,34 +22,34 @@ use Illuminate\Support\Facades\Route;
 Route::get('/',[HomeController::class,'index']);
 
 Route::group(['prefix'=>'cart'],function(){
-    Route::get('/',[CartController::class,'index']);
-    Route::post('/add',[CartController::class,'addToCart']);
-    Route::match(['get','post'],'/pay',[CartController::class,'payment'])->middleware('user');
+    Route::get('/',[CartController::class,'index'])->name('cart');
+    Route::post('/add',[CartController::class,'addToCart'])->name('cart.add');
+    Route::match(['get','post'],'/pay',[CartController::class,'payment'])->middleware('user')->name('cart.pay');
 });
 
 Route::group(['prefix'=>'user'],function(){
-    Route::match(['get','post'],'/login',[UserController::class,'login']);
-    Route::match(['get','post'],'/signup',[UserController::class,'signup']);
+    Route::match(['get','post'],'/login',[UserController::class,'login'])->name('user.login');
+    Route::match(['get','post'],'/signup',[UserController::class,'signup'])->name('user.signup');
 });
 
 Route::group(['prefix'=>'product'],function(){
     Route::get('/{alias}',[ProductController::class,'view']);
 });
 
-Route::match(['get','post'],'administrator/login',[UserController::class,'adminLogin']);
+Route::match(['get','post'],'administrator/login',[UserController::class,'adminLogin'])->name('admin.login');
 
 Route::group(['prefix'=>'administrator','middleware'=>'admin'],function(){
-    Route::get('/',[DashboardController::class,'index']);
+    Route::get('/',[DashboardController::class,'index'])->name('admin');
 
     Route::group(['prefix'=>'product'],function(){
-        Route::get('/list',[ProductController::class,'index']);
-        Route::post('/delete/{id}',[ProductController::class,'destroy']);
-        Route::get('/add',[ProductController::class,'add']);
-        Route::post('/store',[ProductController::class,'store']);
-        Route::match(['get','post'],'/{id}/edit',[ProductController::class,'add']);
+        Route::get('/list',[ProductController::class,'index'])->name('admin.product.list');
+        Route::post('/delete/{id}',[ProductController::class,'destroy'])->name('admin.product.delete');
+        Route::get('/add',[ProductController::class,'add'])->name('admin.product.add');
+        Route::post('/store',[ProductController::class,'store'])->name('admin.product.store');
+        Route::get('/{id}/edit',[ProductController::class,'add'])->name('admin.product.delete');
     });
 
     Route::group(['prefix'=>'order'],function(){
-        Route::get('/list',[OrderController::class,'index']);
+        Route::get('/list',[OrderController::class,'index'])->name('admin.order.list');
     });
 });

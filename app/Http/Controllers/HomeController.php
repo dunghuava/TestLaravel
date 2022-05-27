@@ -15,15 +15,15 @@ class HomeController extends Controller
         $this->productRepo = new ProductRepository();
     }
 
-    public function index ()
+    public function index()
     {
-        $query = request()->get('q','');
+        $query = request()->get('q', '');
         $product = $this->productRepo->getProductHomePage($query);
         $data = [
             'product' => $product,
             'query' => $query
         ];
 
-        return view('pages.home',$data);
+        return view('pages.home', $data);
     }
 }
