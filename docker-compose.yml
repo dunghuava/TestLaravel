@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  workspace:
+    build:
+      context: .
+      dockerfile: ./docker-data/Dockerfile
+    container_name: services
+    working_dir: /var/www/html
+    ports:
+      - "80:80"
+    volumes:
+        - .:/var/www/html
+        - ./docker-data/nginx_log:/var/log/nginx
+        - ./docker-data/php-fpm/php-fpm.log:/var/log/php-fpm.log
+        - ./docker-data/config/app.conf:/etc/nginx/conf.d/app.conf
+    links:
+        - mysql
+
+  mysql:
+    image: mysql:5.6
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docker-data/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
