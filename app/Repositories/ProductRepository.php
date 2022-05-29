@@ -10,7 +10,7 @@ class ProductRepository extends BaseRepository
 
     public function getProductHomePage($query)
     {
-        $search = new SearchElasticRepository();
+        $search = new SearchRepository();
         return $search->search($query);
     }
 
