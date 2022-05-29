@@ -12,10 +12,13 @@ class SearchElasticRepository implements SearchElastic
 
     public function search($query = null)
     {
-        $search = self::where('status', 1);
+        $search = Product::where('status', 1)->get();
         if ($query) {
+            Product::createIndex($shards = null, $replicas = null);
+            Product::putMapping($ignoreConflicts = true);
+            Product::addAllToIndex();
             return Product::searchByQuery([
-                'match' => $query
+                'match' => ['name' => $query]
             ])->where('status', 1)->get();
         }
         return $search;
