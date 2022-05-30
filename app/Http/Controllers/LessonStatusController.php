@@ -56,6 +56,11 @@ class LessonStatusController extends Controller
         }
     }
 
+    public function update(Request $request)
+    {
+        $this->lessonStatusRepo->updateLesson($request);
+    }
+
     public function destroy(Request $request, $id = 0)
     {
         $this->lessonStatusRepo->delete($id);

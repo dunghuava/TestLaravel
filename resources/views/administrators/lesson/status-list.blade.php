@@ -1,6 +1,14 @@
 @extends('administrators.layout')
 @section('title','Lesson Status')
 @section('content')
+    <style>
+        .dragged {
+            position: absolute;
+            opacity: 0.5;
+            z-index: 2000;
+            background: grey;
+        }
+    </style>
     <section class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -10,11 +18,10 @@
                 </div>
             </div>
             <div class="col-lg-12">
-                <table class="table">
+                <table class="table sorted_table">
                     <thead class="thead-dark">
                     <tr>
                         <th width="5%" scope="col">id</th>
-                        <th width="5%" scope="col">order_index</th>
                         <th scope="col">lesson type</th>
                         <th scope="col">name</th>
                         <th width="5%" scope="col">color</th>
@@ -26,12 +33,9 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($items as $item)
-                        <tr>
+                    @foreach ($items as $key => $item)
+                        <tr data-id="{{$item->id}}">
                             <th class="align-middle" scope="row">{{ $item->id }}</th>
-                            <td class="align-middle">
-                                <input type="number" style="width: 70px" value="{{ $item->order_index }}"/>
-                            </td>
                             <td class="align-middle">{{ $item->lesson_type }}</td>
                             <td class="align-middle">{{ $item->name }}</td>
                             <td style="color: {{$item->color}}" class="align-middle">{{ $item->color }}</td>
@@ -54,7 +58,20 @@
             </div>
         </div>
     </section>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <script>
+        $("table tbody").sortable({
+            items: 'tr',
+            update: function(event, ui) {
+                let changes = {};
+                $(this).find('tr').each(function (index,item) {
+                    changes[$(item).data('id')] = $(item).index();
+                })
+                axios.post('/administrator/lesson-status/update',{changes:changes}).then(function (response) {
+                    // success
+                });
+            }
+        }).disableSelection();
         function onDelete(id) {
             if (confirm('Are you sure want to delete ?')) {
                 axios.post('/administrator/lesson-status/delete/' + id).then(function (response) {

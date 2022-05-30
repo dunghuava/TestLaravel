@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title')</title>
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <script src="{{ mix('js/app.js') }}"></script>
     <style>
         body{
             background: #797878;
@@ -29,7 +30,6 @@
             @yield('content')
         </div>
     </div>
-    <script src="{{ mix('js/app.js') }}"></script>
     <footer class="footer-mn">
         <div class="container">
             <div class="row">

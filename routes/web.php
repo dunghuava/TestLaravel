@@ -56,6 +56,7 @@ Route::group(['prefix'=>'administrator','middleware'=>'admin'],function(){
         Route::get('/{id}/edit',[LessonStatusController::class,'show'])->name('admin.lesson_status_show');
         Route::post('/store',[LessonStatusController::class,'store'])->name('admin.lesson_status_store');
         Route::post('/delete/{id}',[LessonStatusController::class,'destroy'])->name('admin.lesson_status_delete');
+        Route::post('/update',[LessonStatusController::class,'update'])->name('admin.lesson_status_update');
     });
 
     Route::group(['prefix'=>'order'],function(){

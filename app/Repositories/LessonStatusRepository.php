@@ -10,6 +10,18 @@ use Illuminate\Http\Request;
 class LessonStatusRepository extends BaseRepository
 {
 
+    public function getAll()
+    {
+        return $this->_model->orderBy('order_index', 'asc')->get();
+    }
+
+    public function updateLesson(Request $request)
+    {
+        foreach ($request->changes as $id => $index){
+            $this->update($id,['order_index'=>$index]);
+        }
+    }
+
     public function saveLessonStatus(Request $request)
     {
         $id = (int)$request->id;
