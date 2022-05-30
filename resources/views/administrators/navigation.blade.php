@@ -12,6 +12,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{route('admin.order.list')}}">Order</a>
             </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{{route('admin.lesson_status')}}">Lesson status</a>
+              </li>
           </ul>
         </div>
       </nav>

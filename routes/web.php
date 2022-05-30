@@ -18,6 +18,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LessonStatusController;
 
 Route::get('/',[HomeController::class,'index']);
 
@@ -47,6 +48,14 @@ Route::group(['prefix'=>'administrator','middleware'=>'admin'],function(){
         Route::get('/add',[ProductController::class,'add'])->name('admin.product.add');
         Route::post('/store',[ProductController::class,'store'])->name('admin.product.store');
         Route::get('/{id}/edit',[ProductController::class,'add'])->name('admin.product.delete');
+    });
+
+    Route::group(['prefix'=>'lesson-status'],function(){
+        Route::get('/',[LessonStatusController::class,'index'])->name('admin.lesson_status');
+        Route::get('/add',[LessonStatusController::class,'show'])->name('admin.lesson_status_add');
+        Route::get('/{id}/edit',[LessonStatusController::class,'show'])->name('admin.lesson_status_show');
+        Route::post('/store',[LessonStatusController::class,'store'])->name('admin.lesson_status_store');
+        Route::post('/delete/{id}',[LessonStatusController::class,'destroy'])->name('admin.lesson_status_delete');
     });
 
     Route::group(['prefix'=>'order'],function(){
