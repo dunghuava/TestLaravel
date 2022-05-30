@@ -25,5 +25,15 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt(12345678),
             'type' => 1
         ]);
+
+        $faker = Faker\Factory::create();
+        for ($i = 0; $i < 100; $i++) {
+            $name = $faker->name;
+            \App\Product::create([
+                'name' => $name,
+                'alias' => str_slug($name),
+                'description' => $faker->paragraph(100)
+            ]);
+        }
     }
 }

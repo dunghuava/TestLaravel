@@ -1,6 +1,5 @@
 version: '3'
 services:
-  #PHP Service
   php:
     build:
       context: .
@@ -17,8 +16,6 @@ services:
       - ./docker-data/php-fpm.d:/usr/local/etc/php-fpm.d
     networks:
       - app-network
-
-  #Nginx Service
   nginx:
     image: nginx:alpine
     container_name: test-nginx
@@ -31,8 +28,6 @@ services:
       - ./docker-data/nginx:/etc/nginx/conf.d/
     networks:
       - app-network
-
-  #MySQL Service
   mysql:
     image: mysql:8.0.19
     container_name: mysql
@@ -43,8 +38,6 @@ services:
       MYSQL_ROOT_PASSWORD: 12345
     networks:
       - app-network
-
-  #phpMyAdmin
   phpMyAdmin:
     image: phpmyadmin/phpmyadmin:latest
     container_name: phpmyadmin
@@ -58,7 +51,6 @@ services:
       - app-network
     external_links:
       - mysql:db
-
   elasticsearch:
     container_name: es-container
     image: docker.elastic.co/elasticsearch/elasticsearch:7.11.0
@@ -80,8 +72,6 @@ services:
       - elasticsearch
     ports:
       - 5601:5601
-
-#Docker Networks
 networks:
   app-network:
     driver: bridge

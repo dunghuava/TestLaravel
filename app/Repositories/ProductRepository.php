@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Product;
+use Elasticsearch\Client;
 use Illuminate\Http\Request;
 
 class ProductRepository extends BaseRepository

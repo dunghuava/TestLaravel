@@ -2,10 +2,13 @@
 
 namespace App;
 
+use Elasticquent\ElasticquentTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    use ElasticquentTrait;
+
     protected $table = 'product';
 
     protected $fillable = [
@@ -20,4 +23,19 @@ class Product extends Model
         'category',
         'status'
     ];
+
+    protected $mappingProperties = array(
+        'name' => [
+            'type' => 'text',
+            "analyzer" => "standard",
+        ],
+        'category' => [
+            'type' => 'text',
+            "analyzer" => "standard",
+        ],
+        'description' => [
+            'type' => 'text',
+            "analyzer" => "standard",
+        ],
+    );
 }
