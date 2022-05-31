@@ -16,11 +16,11 @@
             @foreach ( $product as $item )
                 <div class="col-lg-3">
                     <div class="product-item mt-2 shadow p-2">
-                        <a href="{{ asset('/product/'.$item->alias) }}">
                             <img src="{{ asset('/storage/images/'.$item->image) }}">
-                            <p class="mb-1">{{ $item->name }}</p>
+                            <a href="{{ asset('/product/'.$item->alias) }}">
+                                <p class="mb-1">{{ $item->name }}</p>
+                            </a>
                             <p class="mb-1">Price: {{ number_format($item->price).'$' }}</p>
-                        </a>
                     </div>
                 </div>
             @endforeach

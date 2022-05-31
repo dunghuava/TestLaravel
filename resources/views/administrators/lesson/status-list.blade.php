@@ -2,11 +2,15 @@
 @section('title','Lesson Status')
 @section('content')
     <style>
-        .dragged {
+        .ui-sortable-helper {
             position: absolute;
-            opacity: 0.5;
             z-index: 2000;
-            background: grey;
+            background: #fff;
+            border:1px dotted #257ad4;
+            cursor: move;
+        }
+        .ui-sortable-helper td{
+            width: auto;
         }
     </style>
     <section class="container">
@@ -22,8 +26,8 @@
                     <thead class="thead-dark">
                     <tr>
                         <th width="5%" scope="col">id</th>
-                        <th scope="col">lesson type</th>
-                        <th scope="col">name</th>
+                        <th width="10%" scope="col">lesson type</th>
+                        <th width="35%" scope="col">name</th>
                         <th width="5%" scope="col">color</th>
                         <th width="5%" scope="col">color_alt_1</th>
                         <th width="5%" scope="col">color_alt_2</th>
@@ -48,7 +52,8 @@
                                 @endif
                             </td>
                             <td class="align-middle" align="right">
-                                <a href="{{route('admin.lesson_status_show',$item->id)}}" class="btn btn-sm btn-success">Edit</a>
+                                <a href="{{route('admin.lesson_status_show',$item->id)}}"
+                                   class="btn btn-sm btn-success">Edit</a>
                                 <a onclick="onDelete({{ $item->id }})" class="btn btn-sm btn-danger">Delete</a>
                             </td>
                         </tr>
@@ -62,16 +67,17 @@
     <script>
         $("table tbody").sortable({
             items: 'tr',
-            update: function(event, ui) {
+            update: function (event, ui) {
                 let changes = {};
-                $(this).find('tr').each(function (index,item) {
+                $(this).find('tr').each(function (index, item) {
                     changes[$(item).data('id')] = $(item).index();
                 })
-                axios.post('/administrator/lesson-status/update',{changes:changes}).then(function (response) {
+                axios.post('/administrator/lesson-status/update', {changes: changes}).then(function (response) {
                     // success
                 });
             }
         }).disableSelection();
+
         function onDelete(id) {
             if (confirm('Are you sure want to delete ?')) {
                 axios.post('/administrator/lesson-status/delete/' + id).then(function (response) {
